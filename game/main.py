@@ -1,6 +1,6 @@
 import pygame, sys
 from map_settings import *
-from Level import Level
+from Level import level
 class Game:
 	def __init__(self):
 		  
@@ -9,8 +9,8 @@ class Game:
 		self.screen = pygame.display.set_mode((WIDTH,HEIGTH))
 		pygame.display.set_caption('ไม่รู้ครับคิดชื่อไม่ออกตอนนี้')
 		self.clock = pygame.time.Clock()
-		self.Level = Level()
-	
+
+		self.Level = level()
 	def run(self):
 		while True:
 			for event in pygame.event.get():
