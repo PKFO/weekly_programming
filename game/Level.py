@@ -4,12 +4,15 @@ from tile import Tile
 from map_settings import *
 from player import Player
 from support import *
+from ui import UI
 class level:
     def __init__(self):
         self.display_surface = pygame.display.get_surface()
         self.visible_sprites = camera()
         self.obstacles_sprites = pygame.sprite.Group()
         self.create_map()
+        self.ui = UI()
+
     def create_map(self):
         layout = {
              'boudary' :import_csv_layout('C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/graphic/gameproject_Floorblock_Floorblock.csv'),
@@ -25,15 +28,17 @@ class level:
                             Tile((x,y),[self.obstacles_sprites],'invisible')
                         if style == 'detail':
                             Tile((x,y),[self.obstacles_sprites],'invisible')
-        #          if col == 'x':
-        #              Tile((x,y),[self.visible_sprites,self.obstacles_sprites])
-        #          if col == 'p':
-        #              self.player = Player((x,y),[self.visible_sprites],self.obstacles_sprites)
-        self.player = Player((2000,1500),[self.visible_sprites],self.obstacles_sprites)
+        self.player = Player((2000,1500),[self.visible_sprites],self.obstacles_sprites,self.create_magic)
+    def create_magic(self,style,strenght,cost):
+        print(style)
+        print(strenght)
+        print(cost)
     def run(self):
         #update and draw the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
+        self.ui.display(self.player)
+
 class camera(pygame.sprite.Group):
     def __init__(self):
         super().__init__()
@@ -47,8 +52,11 @@ class camera(pygame.sprite.Group):
     def custom_draw(self,player):
         self.offset.x = player.rect.centerx - self.half_width
         self.offset.y = player.rect.centery - self.half_height
+
         floor_offset_pos = self.floor_rect.topleft - self.offset
         self.display_surface.blit(self.floor_surface,floor_offset_pos)
+        
         for sprite in sorted(self.sprites(),key = lambda sprite: sprite.rect.centery):
             offset_pos = sprite.rect.topleft - self.offset
             self.display_surface.blit(sprite.image,offset_pos) 
+
