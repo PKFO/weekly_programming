@@ -25,6 +25,11 @@ UI_BORDER_COLOR_ACTIVE = 'gold'
 
 #magic
 magic_data = {
-    'magic':{'strength': 5,'cost':20,'graphic':'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/graphic/skill/magic/'},
-    'Aura': {'strength': 10,'cost': 10,'graphic':'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/graphic/skill/Aura/'}
+    'atk':{'strength': 5,'cost':20,'graphic:':'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/graphic/skill/atk'},
+    'Aura': {'strength': 10,'cost': 10,'graphic':'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/graphic/skill/Aura'}
+}
+
+monster_data ={
+    'ghost':{'health': 100,'exp': 100,'damage':20,'attack_type':'slash','speed':3,'resistance': 3,'attack_radius':80,'notice_radius':360},
+    'demon':{'health': 200,'exp': 150,'damage':40,'attack_type':'flame','speed':3,'resistance': 3,'attack_radius':120,'notice_radius':360}
 }
