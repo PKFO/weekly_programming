@@ -1,13 +1,12 @@
 import pygame
 from map_settings import *
 from support import import_folder
+from entity import Entity
 
-
-class Player(pygame.sprite.Sprite):
+class Player(Entity):
     def __init__(self, pos, groups, obstacle_sprites, create_magic):
         super().__init__(groups)
-        self.image = pygame.image.load(
-            "C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/character/Player1.png").convert_alpha()
+        self.image = pygame.image.load("C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/character/Player1.png").convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
         self.hitbox = self.rect.inflate(0, -10)
 
@@ -36,8 +35,7 @@ class Player(pygame.sprite.Sprite):
 
     def import_player_assets(self):
         character_path = 'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/character/player/'
-        self.animations = {'up': [], 'down': [], 'left': [], 'right': [
-        ], 'idle_up': [], 'idle_right': [], 'idle_left': [], 'idle_down': []}
+        self.animations = {'up': [], 'down': [], 'left': [], 'right': [], 'idle_up': [], 'idle_right': [], 'idle_left': [], 'idle_down': []}
 
         for animation in self.animations.keys():
             full_path = character_path + animation
