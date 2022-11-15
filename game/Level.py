@@ -8,15 +8,27 @@ from debug import debug
 from support import *
 from ui import UI
 from enemy import Enemy
+from particles import AnimationPlayer
+from magic import MagicPlayer
 
 
 class level:
     def __init__(self):
         self.display_surface = pygame.display.get_surface()
+
         self.visible_sprites = camera()
         self.obstacles_sprites = pygame.sprite.Group()
+
+        self.current_attack = None
+        self.attack_sprites = pygame.sprite.Group()
+        self.attackable_sprites = pygame.sprite.Group()
+
         self.create_map()
+
         self.ui = UI()
+
+        self.animation_player = AnimationPlayer()
+        self.magic_player = MagicPlayer(self.animation_player)
 
     def create_map(self):
         layout = {
@@ -41,17 +53,38 @@ class level:
                                  if col == '210':monster_name = 'demon'
                                  elif col == '22':monster_name = 'ghost'
                                  Enemy(monster_name,(x,y),[self.visible_sprites],self.obstacles_sprites)
+    def create_magic(self, style, strength, cost):
+        if style == 'heal':
+            self.magic_player.heal(self.player,strength,cost,[self.visible_sprites])
 
+        if style == 'flame':
+            self.magic_player.flame(self.player,cost,[self.visible_sprites,self.attack_sprites])
 
-    def create_magic(self, style, strenght, cost):
-        print(style)
-        print(strenght)
-        print(cost)
     
     def destroy_attack(self):
         if self.current_attack:
             self.current_attack.kill()
         self.current_attack = None
+
+    def player_attack_logic(self):
+            if self.attack_sprites:
+                for attack_sprite in self.attack_sprites:
+                    collision_sprites = pygame.sprite.spritecollide(attack_sprite,self.attackable_sprites,False)
+                    if collision_sprites:
+                        for target_sprite in collision_sprites:
+                            if target_sprite.sprite_type == 'grass':
+                                target_sprite.kill()
+                            else:
+                                target_sprite.get_damage(self.player,attack_sprite.sprite_type)
+    def damage_player(self,amount,attack_type):
+            if self.player.vulnerable:
+                self.player.health -= amount
+                self.player.vulnerable = False
+                self.player.hurt_time = pygame.time.get_ticks()
+			# spawn particles
+    def trigger_death_particles(self,pos,particle_type):
+
+        self.animation_player.create_particles(particle_type,pos,self.visible_sprites)
 
 
     def run(self):
