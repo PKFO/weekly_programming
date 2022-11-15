@@ -26,7 +26,9 @@ UI_BORDER_COLOR_ACTIVE = 'gold'
 #magic
 magic_data = {
     'atk':{'strength': 5,'cost':20,'graphic:':'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/graphic/skill/atk'},
-    'Aura': {'strength': 10,'cost': 10,'graphic':'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/graphic/skill/Aura'}
+    'Aura': {'strength': 10,'cost': 10,'graphic':'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/graphic/skill/Aura'},
+    'heal': {'strength': 10,'cost': 10,'graphic':'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/Pro_fun/game/graphic/skill/heal'}
+
 }
 
 monster_data ={
