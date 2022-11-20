@@ -23,7 +23,7 @@ big_asteroids = []
 big_asteroid_health = 5
 laser_width = 50
 laser_height = 80
-laser_vel = 100
+laser_vel = 20
 enemy_laser_width = 10
 enemy_laser_height = 70
 laser_delay = 10
@@ -45,7 +45,6 @@ boss_spawned = False
 boss_death_count = 0
 blood_width = 50
 vec = pygame.math.Vector2
-heart_width = 1000
 count = 0
 alien_frame_count = 0
 item_width = 200
@@ -91,12 +90,6 @@ id3 = pygame.transform.scale(pygame.image.load("C:/Users/Admin/Desktop/งาน
 #boss2_image = pygame.transform.scale(pygame.image.load('C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/enemy/boss/1.png'))
 #initialize pygame and create window
 #player health
-heart3 = pygame.transform.scale(pygame.image.load("C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/player/heart3.png"), (heart_width, heart_width))
-heart2 = pygame.transform.scale(pygame.image.load("C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/player/heart2.png"), (heart_width, heart_width))
-heart1 = pygame.transform.scale(pygame.image.load("C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/player/heart1.png"), (heart_width, heart_width))
-heart3 = pygame.transform.scale(pygame.image.load("C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/player/heart0.png"), (heart_width, heart_width))
-#font
-font_name = 'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/8-BIT WONDER.TTF'
 
 pygame.mixer.pre_init(44100, -16, 1, 512) #prevents sound delay
 pygame.init()
@@ -105,7 +98,7 @@ game_over_font = pygame.font.SysFont("bell", 120, bold=True) #game over font
 win_font = pygame.font.SysFont('cambrian', 120, bold=True)
 #pygame.mixer.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Space Shooter")
+pygame.display.set_caption("Deadline")
 clock = pygame.time.Clock()
 class Items(pygame.sprite.Sprite):
     def __init__(self,pos):
@@ -580,23 +573,23 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+            if event.type == pygame.K_ESCAPE:
+                pygame.quit()
             
             if event.type == pygame.KEYDOWN: #this is for if you want to spam the space bar
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE or event.key == pygame.K_DOWN :
                     pygame.mixer.Channel(0).play(pygame.mixer.Sound('C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/laser_sound.wav'))
                     all_sprites.add(Laser())
         # Update
         all_sprites.update()
         add_asteroid()
-        # for item in items:
-        #     item.render(screen)
-            #item.update(player)
+        
         if len(asteroids) > 0 :
             add_laser()
         
         if asteroid_kill_count > 30: #49
             add_big_asteroid()
-        
+            pass
         if asteroid_kill_count > 40: #99
             add_alien()
             if len(aliens) > 0:
@@ -611,6 +604,7 @@ def main():
             g.win()
         
         if player_health < 1:
+            g.updateScore(asteroid_kill_count)
             g.game_loop()
         
         # Draw / render

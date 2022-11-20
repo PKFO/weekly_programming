@@ -1,9 +1,11 @@
 import pygame
 import sys
 from menu import *
+
 start_width = 300
 start_Height = 100
 boss_death_count = 0
+score = 0
 game_over = pygame.transform.scale(pygame.image.load('C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/UI/GAME_OVER.png'),(start_width ,start_Height))
 
 class Game():
@@ -22,12 +24,17 @@ class Game():
         self.options = OptionsMenu(self)
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
-
+    
+    def updateScore(self,data):
+        self.score = data
     def game_loop(self):
         global player_health
         game_over = True
         pygame.mixer.music.stop()
         pygame.mixer.Channel(3).play(pygame.mixer.Sound( 'C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/game_over.wav'))
+        self.options.load_file()
+        self.options.add_data(self.score)
+        self.options.save_file()
         while game_over:
             self.check_events()
             if self.START_KEY:

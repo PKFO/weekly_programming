@@ -1,9 +1,11 @@
 import pygame
 import sys
+
 start_width = 200
 start_Height = 50
 rank_image_width = 100
 rank_image_Height = 80
+rank = []
 image = pygame.transform.scale(pygame.image.load('C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/UI/START .png'), (start_width, start_Height))
 rank_image = pygame.transform.scale(pygame.image.load('C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/UI/ranking.png'), (rank_image_width, rank_image_Height))
 class Menu():
@@ -49,6 +51,7 @@ class MainMenu(Menu):
             self.check_input()
             self.game.display.fill(self.game.BLACK)
             self.game.draw_text('Main Menu', 50, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
+            self.game.draw_text('Perawat kosit 65010768',20,220,20)
             self.draw_cursor()
             self.blit_screen()
 
@@ -94,16 +97,18 @@ class OptionsMenu(Menu):
 
     def display_menu(self):
         self.run_display = True
+        self.load_file()
         while self.run_display:
             self.game.check_events()
             self.check_input()
             self.game.display.fill((0, 0, 0))
-            self.game.draw_text('Options', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
-            self.game.draw_text("Volume", 15, self.volx, self.voly)
-            self.game.draw_text("Controls", 15, self.controlsx, self.controlsy)
+            self.game.draw_text("No1 " + str(rank[4]) , 50, self.volx, self.voly - 200)
+            self.game.draw_text("No2 "+ str(rank[3]), 50, self.volx, self.voly - 100)
+            self.game.draw_text("No3 "+str(rank[2]), 50, self.volx, self.voly) 
+            self.game.draw_text("No4 " + str(rank[1]), 50, self.volx, self.voly+ 100)  
+            self.game.draw_text("No5 "+str(rank[0]), 50, self.volx, self.voly+ 200)   
             self.draw_cursor()
             self.blit_screen()
-
     def check_input(self):
         if self.game.BACK_KEY:
             self.game.curr_menu = self.game.main_menu
@@ -118,6 +123,23 @@ class OptionsMenu(Menu):
         elif self.game.START_KEY:
             # TO-DO: Create a Volume Menu and a Controls Menu
             pass
+    def add_data(self,data):
+        rank.append(data)
+        rank.sort()
+        rank.pop(0)
+    def load_file(self):
+        f = open("C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/code/score.txt",'r') 
+        rank.append(int(f.readline()))
+        rank.append(int(f.readline()))
+        rank.append(int(f.readline()))
+        rank.append(int(f.readline()))
+        rank.append(int(f.readline()))
+        f.close()
+    def save_file(self):
+        f = open("C:/Users/Admin/Desktop/งานทุกวิชา/เขียนโค้ด/test/real/code/score.txt",'w')   
+        for score in rank:
+            f.write(str(score) + "\n")
+        f.close()
 
 class CreditsMenu(Menu):
     def __init__(self, game):
@@ -134,3 +156,4 @@ class CreditsMenu(Menu):
             self.game.draw_text('Credits', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
             self.game.draw_text('Made by me', 15, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 10)
             self.blit_screen()
+
